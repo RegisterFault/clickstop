@@ -3,7 +3,7 @@
 #Click on an x window to pause or resume
 #  This recursively obtains the child process tree of the whole application
 #requires xdotool, pgrep
-DEBUG=true
+DEBUG=false
 
 if [ "$1" == "pause" ]
 then
@@ -34,11 +34,10 @@ children() {
 
 PROC=$(xdotool selectwindow getwindowpid)
 [ "$DEBUG" == "true" ] && echo $PROC > /dev/stderr
-CHILDREN=$(children $PROC)
+CHILDREN=$(children $PROC) 
 [ "$DEBUG" == "true" ] && echo $CHILDREN > /dev/stderr
 PROCS="$PROC $CHILDREN"
 [ "$DEBUG" == "true" ] && echo $PROCS > /dev/stderr
-echo $PROCS
 
 
 for i in $PROCS
