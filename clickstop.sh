@@ -5,19 +5,6 @@
 #requires xdotool, pgrep
 DEBUG=false
 
-if [ "$1" == "pause" ]
-then
-	KILLARG="-STOP"
-elif [ "$1" == "resume" ]
-then
-	KILLARG="-CONT"
-else
-	echo "ERROR: Commands are \"pause\" or \"resume\" only!" > /dev/stderr
-	exit
-fi
-
-
-
 children() {
 	PIDNODES=$( for i in $@
                     do
@@ -31,6 +18,17 @@ children() {
 		children $PIDNODES
 	fi
 }
+
+if [ "$1" == "pause" ]
+then
+	KILLARG="-STOP"
+elif [ "$1" == "resume" ]
+then
+	KILLARG="-CONT"
+else
+	echo "ERROR: Commands are \"pause\" or \"resume\" only!" > /dev/stderr
+	exit
+fi
 
 PROC=$(xdotool selectwindow getwindowpid)
 [ "$DEBUG" == "true" ] && echo $PROC > /dev/stderr
